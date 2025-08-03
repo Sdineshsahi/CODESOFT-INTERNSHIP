@@ -1,0 +1,72 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Student {
+    String name;
+    double score;
+
+    Student(String name, double score) {
+        this.name = name;
+        this.score = score;
+    }
+}
+
+public class StudentGradesManager {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Student> students = new ArrayList<>();
+
+        System.out.println("=== Student Grades Manager ===");
+
+        // Input student data
+        System.out.print("Enter number of students: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+
+        for (int i = 1; i <= n; i++) {
+            System.out.print("Enter name of student " + i + ": ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter score of " + name + ": ");
+            double score = scanner.nextDouble();
+            scanner.nextLine(); // consume newline
+
+            students.add(new Student(name, score));
+        }
+
+        // Process data
+        double total = 0;
+        double highest = Double.MIN_VALUE;
+        double lowest = Double.MAX_VALUE;
+        String topStudent = "";
+        String lowStudent = "";
+
+        for (Student s : students) {
+            total += s.score;
+            if (s.score > highest) {
+                highest = s.score;
+                topStudent = s.name;
+            }
+            if (s.score < lowest) {
+                lowest = s.score;
+                lowStudent = s.name;
+            }
+        }
+
+        double average = total / students.size();
+
+        // Display summary report
+        System.out.println("\n=== Summary Report ===");
+        System.out.printf("Average Score: %.2f\n", average);
+        System.out.printf("Highest Score: %.2f by %s\n", highest, topStudent);
+        System.out.printf("Lowest Score: %.2f by %s\n", lowest, lowStudent);
+
+        System.out.println("\n=== All Student Scores ===");
+        for (Student s : students) {
+            System.out.printf("%s - %.2f\n", s.name, s.score);
+        }
+
+        scanner.close();
+    }
+}
